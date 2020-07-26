@@ -16,9 +16,9 @@
 # @param proto Protocol to use. default: tcp
 define ufw::deny(
   Enum['IN','OUT'] $direction ='IN',
-  String $from = 'any',
-  String $ip = '',
-  String $port = 'all',
+  Variant[Stdlib::IP::Address, String] $from = 'any',
+  Variant[Stdlib::IP::Address, String] $ip = '',
+  Variant[Stdlib::Port, String] $port = 'all',
   Enum[ 'tcp','udp','any'] $proto = 'tcp',
 ) {
   $dir = $direction ? {

@@ -26,8 +26,8 @@ describe 'ufw::reject', type: :define do
       end
 
       describe 'specifying to address' do
-        context 'from ipaddress_eth0 fact' do
-          let(:facts) { { ipaddress_eth0: '192.0.2.67' } }
+        context 'from ipaddress fact' do
+          let(:facts) { { ipaddress: '192.0.2.67' } }
 
           it do
             is_expected.to contain_exec('ufw-reject-IN-tcp-from-any-to-any-port-all')
@@ -56,8 +56,8 @@ describe 'ufw::reject', type: :define do
           end
         end
 
-        context 'when both $ip and ipaddress_eth0 are specified' do
-          let(:facts) { { ipaddress_eth0: '192.0.2.67' } }
+        context 'when both $ip and ipaddress are specified' do
+          let(:facts) { { ipaddress: '192.0.2.67' } }
           let(:params) { { ip: '192.0.2.68' } }
 
           it do

@@ -17,15 +17,15 @@
 # @param reject Hash of connections to reject. default: {}
 # @param service_name Name of service to manage. default: ufw
 class ufw(
-  Hash $allow = $::ufw::params::allow,
-  Hash $deny = $::ufw::params::deny,
-  Boolean $deny_outgoing = $::ufw::params::deny_outgoing,
-  Enum['ACCEPT','DROP','REJECT'] $forward = $::ufw::params::forward,
-  Hash $limit = $::ufw::params::limit,
-  Enum['off','low','medium','high','full'] $log_level = $::ufw::params::log_level,
-  Boolean $manage_service = $::ufw::params::manage_service,
-  Hash $reject = $::ufw::params::reject,
-  String $service_name = $::ufw::params::service_name,
+  Hash                                      $allow          = $::ufw::params::allow,
+  Hash                                      $deny           = $::ufw::params::deny,
+  Boolean                                   $deny_outgoing  = $::ufw::params::deny_outgoing,
+  Enum['ACCEPT','DROP','REJECT']            $forward        = $::ufw::params::forward,
+  Hash                                      $limit          = $::ufw::params::limit,
+  Enum['off','low','medium','high','full']  $log_level      = $::ufw::params::log_level,
+  Boolean                                   $manage_service = $::ufw::params::manage_service,
+  Hash                                      $reject         = $::ufw::params::reject,
+  String                                    $service_name   = $::ufw::params::service_name,
 ) inherits ufw::params {
   Exec {
     path     => '/bin:/sbin:/usr/bin:/usr/sbin',

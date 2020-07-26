@@ -18,9 +18,9 @@
 define ufw::allow(
   Enum['IN','OUT'] $direction ='IN',
   Enum['absent','present'] $ensure ='present',
-  String $from = 'any',
-  String $ip = '',
-  String $port = 'all',
+  Variant[Stdlib::IP::Address, String] $from = 'any',
+  Variant[Stdlib::IP::Address, String] $ip = 'any',
+  Variant[Stdlib::Port, String] $port = 'all',
   Enum[ 'tcp','udp','any'] $proto = 'tcp',
 ) {
   $dir = $direction ? {
@@ -28,11 +28,10 @@ define ufw::allow(
     default => ''
   }
 
-  if $ip == '' {
-    $ipadr = pick($::ipaddress_eth0, $::ipaddress, 'any')
-  } else {
-    # Use $ip as ufw 'to' address when supplied
-    $ipadr = $ip
+  # For 'allow' action, the default is to deny to any address
+  $ipadr = $ip ? {
+    ''      => 'any',
+    default => $ip,
   }
 
   $ipver = $ipadr ? {

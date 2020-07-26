@@ -26,16 +26,6 @@ describe 'ufw::allow', type: :define do
       end
 
       describe 'specifying to address' do
-        context 'from ipaddress_eth0 fact' do
-          let(:facts) { { ipaddress_eth0: '192.0.2.67' } }
-
-          it do
-            is_expected.to contain_exec('ufw-allow-IN-tcp-from-any-to-192.0.2.67-port-all')
-              .with_command('ufw allow  proto tcp from any to 192.0.2.67')
-              .with_unless("ufw status | grep -qE '^192.0.2.67/tcp +ALLOW +Anywhere( +.*)?$'")
-          end
-        end
-
         context 'from $ip parameter' do
           let(:params) { { ip: '192.0.2.68' } }
 
@@ -76,8 +66,8 @@ describe 'ufw::allow', type: :define do
           end
         end
 
-        context 'when both $ip and ipaddress_eth0 are specified' do
-          let(:facts) { { ipaddress_eth0: '192.0.2.67' } }
+        context 'when both $ip and ipaddress are specified' do
+          let(:facts) { { ipaddress: '192.0.2.67' } }
           let(:params) { { ip: '192.0.2.68' } }
 
           it do
@@ -88,7 +78,7 @@ describe 'ufw::allow', type: :define do
         end
 
         context 'when from is a specific ip address' do
-          let(:facts) { { ipaddress_eth0: '192.0.2.68' } }
+          let(:facts) { { ipaddress: '192.0.2.68' } }
           let(:params) { { from: '192.0.2.69' } }
 
           it do

@@ -2,14 +2,15 @@
 #
 # Dont include this class directly.
 #
-class ufw::params {
-  $allow          = {}
-  $deny           = {}
-  $deny_outgoing  = false
-  $forward        = 'DROP'
-  $limit          = {}
-  $log_level      = 'low'
-  $manage_service = true
-  $reject         = {}
-  $service_name   = 'ufw'
+class ufw::params (
+  Hash                                      $allow          = {},
+  Hash                                      $deny           = {},
+  Boolean                                   $deny_outgoing  = false,
+  Enum['ACCEPT','DROP','REJECT']            $forward        = 'DROP',
+  Hash                                      $limit          = {},
+  Enum['off','low','medium','high','full']  $log_level      = 'low',
+  Boolean                                   $manage_service = true,
+  Hash                                      $reject         = {},
+  String                                    $service_name   = 'ufw',
+  ) {
 }
