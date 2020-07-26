@@ -13,18 +13,8 @@ class ufw::service inherits ufw {
     hasstatus => true,
   }
 
-  case $facts['os']['distro']['codename'] {
-    'squeeze': {
-      exec { 'ufw-enable':
-        command => 'yes | ufw enable',
-        unless  => 'ufw status | grep "Status: active"',
-      }
-    }
-    default: {
-      exec { 'ufw-enable':
-        command => 'ufw --force enable',
-        unless  => 'ufw status | grep "Status: active"',
-      }
-    }
+  exec { 'ufw-enable':
+    command => 'ufw --force enable',
+    unless  => 'ufw status | grep "Status: active"',
   }
 }

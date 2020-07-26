@@ -5,6 +5,7 @@ describe 'ufw::reject', type: :define do
     context "on #{os}" do
       let(:facts) { facts }
       let(:title) { 'foo' }
+      let(:pre_condition) { 'include ufw' }
 
       context 'basic operation' do
         it do
