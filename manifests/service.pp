@@ -13,7 +13,7 @@ class ufw::service inherits ufw {
     hasstatus => true,
   }
 
-  case $::lsbdistcodename {
+  case $facts['os']['distro']['codename'] {
     'squeeze': {
       exec { 'ufw-enable':
         command => 'yes | ufw enable',

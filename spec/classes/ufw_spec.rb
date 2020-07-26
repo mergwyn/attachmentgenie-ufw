@@ -22,7 +22,7 @@ describe 'ufw', type: :class do
               .with_unless("grep -qE '^LOGLEVEL=low$' /etc/ufw/ufw.conf")
           end
 
-          it 'bies default deny all incoming connections' do
+          it 'by default deny all incoming connections' do
             is_expected.to contain_exec('ufw-default-deny')
           end
 
