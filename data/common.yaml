@@ -1,1 +1,12 @@
 ---
+
+ufw::allow:          {}
+ufw::deny:           {}
+ufw::deny_outgoing:  false
+ufw::forward:        'DROP'
+ufw::limit:          {}
+ufw::log_level:      'low'
+ufw::manage_service: true
+ufw::reject:         {}
+ufw::service_name:  'ufw'
+
