@@ -123,7 +123,6 @@ describe 'ufw::allow', type: :define do
 
       context 'with ensure => absent' do
         let(:params) { { ensure: 'absent' } }
-        it { pp catalogue.resources }
 
         it do
           is_expected.to contain_exec("ufw-delete-tcp-from-any-to-#{ip}-port-all")
