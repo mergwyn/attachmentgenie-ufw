@@ -11,29 +11,26 @@
 #
 # @param direction The first parameter for this class
 # @param from Ip address to allow access from. default: any
-# @param ip Ip address to allow access to. default: ''
+# @param ip Ip address to allow access to. default: any
 # @param port Port to act on. default: all
 # @param proto Protocol to use. default: tcp
+#
 define ufw::reject(
-  Enum['IN','OUT'] $direction ='IN',
-  String $from = 'any',
-  String $ip = '',
-  String $port = 'all',
-  Enum[ 'tcp','udp','any'] $proto = 'tcp',
+  Enum['IN','OUT']                         $direction ='IN',
+  Variant[Enum['any'],Stdlib::IP::Address] $from = 'any',
+  Variant[Enum['any'],Stdlib::IP::Address] $ip = 'any',
+  Variant[Enum['all'],Stdlib::Port]        $port = 'all',
+  Enum[ 'tcp','udp','any']                 $proto = 'tcp',
 ) {
   $dir = $direction ? {
     'out'   => 'OUT',
     default => ''
   }
 
-  # For 'reject' action, the default is to deny to any address
-  $ipadr = $ip ? {
-    ''      => 'any',
-    default => $ip,
-  }
+  $ipadr = $ip
 
-  $ipver = $ipadr ? {
-    /:/     => 'v6',
+  $ipver = is_ipv6_address($ipadr) ? {
+    true    => 'v6',
     default => 'v4',
   }
 
