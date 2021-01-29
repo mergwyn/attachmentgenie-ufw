@@ -79,7 +79,6 @@ describe 'ufw::allow', type: :define do
         end
 
         context 'when both $ip and networking::ip are specified' do
-          let(:facts) { { networking:{ ip: '192.0.2.67' } } }
           let(:params) { { ip: '192.0.2.68' } }
 
           it do
@@ -90,19 +89,18 @@ describe 'ufw::allow', type: :define do
         end
 
         context 'when from is a specific ip address' do
-          let(:facts) { { networking: { ip: '192.0.2.68'} } }
           let(:params) { { from: '192.0.2.69' } }
 
           it do
-            is_expected.to contain_exec('ufw-allow-IN-tcp-from-192.0.2.69-to-192.0.2.68-port-all')
-              .with_command('ufw allow  proto tcp from 192.0.2.69 to 192.0.2.68')
-              .with_unless("ufw status | grep -qE '^192.0.2.68/tcp +ALLOW +192.0.2.69/tcp( +.*)?$'")
+            is_expected.to contain_exec("ufw-allow-IN-tcp-from-192.0.2.69-to-#{ip}-port-all")
+              .with_command("ufw allow  proto tcp from 192.0.2.69 to #{ip}")
+              .with_unless("ufw status | grep -qE '^#{ip}/tcp +ALLOW +192.0.2.69/tcp( +.*)?$'")
           end
         end
       end
 
       context 'specifying port' do
-        let(:params) { { port: '8080' } }
+        let(:params) { { port: 8080 } }
 
         it do
           is_expected.to contain_exec("ufw-allow-IN-tcp-from-any-to-#{ip}-port-8080")
@@ -112,7 +110,7 @@ describe 'ufw::allow', type: :define do
       end
 
       context 'specifying port for any protocol' do
-        let(:params) { { port: '8080', proto: 'any' } }
+        let(:params) { { port: 8080, proto: 'any' } }
 
         it do
           is_expected.to contain_exec("ufw-allow-IN-any-from-any-to-#{ip}-port-8080")

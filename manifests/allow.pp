@@ -12,31 +12,27 @@
 # @param direction The first parameter for this class
 # @param ensure Enable of disable rule. default: present
 # @param from Ip address to allow access from. default: any
-# @param ip Ip address to allow access to. default: ''
+# @param ip Ip address to allow access to. default: $facts['networking']['ip']
 # @param port Port to act on. default: all
 # @param proto Protocol to use. default: tcp
+#
 define ufw::allow(
-  Enum['IN','OUT'] $direction ='IN',
-  Enum['absent','present'] $ensure ='present',
-  String $from = 'any',
-  String $ip = '',
-  String $port = 'all',
-  Enum[ 'tcp','udp','any'] $proto = 'tcp',
+  Enum['IN','OUT']                         $direction ='IN',
+  Enum['absent','present']                 $ensure ='present',
+  Variant[Enum['any'],Stdlib::IP::Address] $from = 'any',
+  Variant[Enum['any'],Stdlib::IP::Address] $ip = $facts['networking']['ip'],
+  Variant[Enum['all'],Stdlib::Port]        $port = 'all',
+  Enum[ 'tcp','udp','any']                 $proto = 'tcp',
 ) {
   $dir = $direction ? {
     'out'   => 'OUT',
     default => ''
   }
 
-  if $ip == '' {
-    $ipadr = pick($::ipaddress_eth0, $::ipaddress, 'any')
-  } else {
-    # Use $ip as ufw 'to' address when supplied
-    $ipadr = $ip
-  }
+  $ipadr = $ip
 
-  $ipver = $ipadr ? {
-    /:/     => 'v6',
+  $ipver = is_ipv6_address($ipadr) ? {
+    true    => 'v6',
     default => 'v4',
   }
 
