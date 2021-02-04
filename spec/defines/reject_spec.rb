@@ -9,7 +9,6 @@ describe 'ufw::reject', type: :define do
 
       let(:pre_condition) { 'include ufw' }
 
-
       context 'basic operation' do
         it do
           is_expected.to contain_exec('ufw-reject-IN-tcp-from-any-to-any-port-all')

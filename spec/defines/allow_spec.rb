@@ -6,11 +6,12 @@ describe 'ufw::allow', type: :define do
       let(:facts) { facts }
       let(:title) { 'foo' }
       let(:ip) { facts[:networking]['ip'] }
-    
+
       let(:pre_condition) { 'include ufw' }
 
       context 'basic operation' do
         let(:params) { { ip: '192.168.42.42' } }
+
         it do
           is_expected.to contain_exec('ufw-allow-IN-tcp-from-any-to-192.168.42.42-port-all')
             .with_command('ufw allow  proto tcp from any to 192.168.42.42')
@@ -19,7 +20,7 @@ describe 'ufw::allow', type: :define do
       end
 
       context 'specifying from address' do
-        let(:params) { { from: '192.0.2.42', ip: '192.168.42.42', } }
+        let(:params) { { from: '192.0.2.42', ip: '192.168.42.42' } }
 
         it do
           is_expected.to contain_exec('ufw-allow-IN-tcp-from-192.0.2.42-to-192.168.42.42-port-all')
@@ -29,7 +30,6 @@ describe 'ufw::allow', type: :define do
       end
 
       describe 'specifying to address' do
-
         context 'from networking::ip fact' do
           it do
             is_expected.to contain_exec("ufw-allow-IN-tcp-from-any-to-#{ip}-port-all")
@@ -49,7 +49,7 @@ describe 'ufw::allow', type: :define do
         end
 
         context 'from $ip parameter (any protocol)' do
-          let(:params) { { ip: '192.0.2.68', proto: 'any', } }
+          let(:params) { { ip: '192.0.2.68', proto: 'any' } }
 
           it do
             is_expected.to contain_exec('ufw-allow-IN-any-from-any-to-192.0.2.68-port-all')
@@ -69,7 +69,7 @@ describe 'ufw::allow', type: :define do
         end
 
         context 'from $ip parameter (ipv6, any protocol)' do
-          let(:params) { { ip: '2a00:1450:4009:80c::1001', proto: 'any', } }
+          let(:params) { { ip: '2a00:1450:4009:80c::1001', proto: 'any' } }
 
           it do
             is_expected.to contain_exec('ufw-allow-IN-any-from-any-to-2a00:1450:4009:80c::1001-port-all')
