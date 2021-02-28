@@ -1,32 +1,42 @@
-#  Installs and enables Ubuntu's "uncomplicated" firewall.
+# @summary Installs and enables Ubuntu's "uncomplicated" firewall.
 #
-#  Be careful calling this class alone, it will by default enable ufw
-# and disable all incoming traffic.
-#
+# @note
+#   Be careful calling this class alone, it will by default enable ufw
+#   and disable all incoming traffic.
 #
 # @example when declaring the ufw class
 #   include ufw
 #
-# @param allow Set of connections to allow. default: {}
-# @param deny Set of connections to deny. default: {}
-# @param deny_outgoing Block out going connections. default:false
-# @param forward Behavior for forwards. default: DROP
-# @param limit Hash of connections to limit. default: {}
-# @param log_level Level to log with. default: low
-# @param manage_service Manage the service. default: true
-# @param reject Hash of connections to reject. default: {}
-# @param service_name Name of service to manage. default: ufw
+# @param allow
+#   Set of connections to allow.
+# @param deny
+#   Set of connections to deny.
+# @param deny_outgoing
+#   Block out going connections.
+# @param forward
+#   Behavior for forwards.
+# @param limit
+#   Hash of connections to limit.
+# @param log_level
+#   Level to log with.
+# @param manage_service
+#   Manage the service.
+# @param reject
+#   Hash of connections to reject.
+# @param service_name
+#   Name of service to manage.
+#
 class ufw(
-  Hash $allow = $::ufw::params::allow,
-  Hash $deny = $::ufw::params::deny,
-  Boolean $deny_outgoing = $::ufw::params::deny_outgoing,
-  Enum['ACCEPT','DROP','REJECT'] $forward = $::ufw::params::forward,
-  Hash $limit = $::ufw::params::limit,
-  Enum['off','low','medium','high','full'] $log_level = $::ufw::params::log_level,
-  Boolean $manage_service = $::ufw::params::manage_service,
-  Hash $reject = $::ufw::params::reject,
-  String $service_name = $::ufw::params::service_name,
-) inherits ufw::params {
+  Hash $allow                                         = undef,
+  Hash $deny                                          = undef,
+  Boolean $deny_outgoing                              = false,
+  Enum['ACCEPT','DROP','REJECT'] $forward             = 'DROP',
+  Hash $limit                                         = undef,
+  Enum['off','low','medium','high','full'] $log_level = 'low',
+  Boolean $manage_service                             = true,
+  Hash $reject                                        = undef,
+  String $service_name                                = 'ufw',
+) {
   Exec {
     path     => '/bin:/sbin:/usr/bin:/usr/sbin',
     provider => 'posix',

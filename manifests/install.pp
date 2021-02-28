@@ -1,4 +1,4 @@
-#  Installs and enables Ubuntu's "uncomplicated" firewall.
+# @summary Install support class
 #
 class ufw::install inherits ufw {
   package { 'ufw':

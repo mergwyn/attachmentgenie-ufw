@@ -10,7 +10,7 @@ describe 'ufw', type: :class do
       it { is_expected.to contain_anchor('ufw::begin').that_comes_before('Class[ufw::config]') }
       it { is_expected.to contain_class('ufw::config') }
       it { is_expected.to contain_class('ufw::install') }
-      it { is_expected.to contain_class('ufw::params') }
+#      it { is_expected.to contain_class('ufw::params') }
       it { is_expected.to contain_class('ufw::service') }
       it { is_expected.to contain_anchor('ufw::end').that_requires('Class[ufw::service]') }
 

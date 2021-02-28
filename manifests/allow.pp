@@ -1,20 +1,22 @@
-#  Installs and enables Ubuntu's "uncomplicated" firewall.
+# @summary Create allow rule
 #
-#  Be careful calling this class alone, it will by default enable ufw
-# and disable all incoming traffic.
+# @example Allow port 22 (sh)
+#   ufw::allow { 'allow-ssh-from-all':
+#     port => '22',
+#   }
 #
-#
-# @example when declaring the ufw class
-#  ufw::allow { 'allow-ssh-from-all':
-#    port => '22',
-#  }
-#
-# @param direction The first parameter for this class
-# @param ensure Enable of disable rule. default: present
-# @param from Ip address to allow access from. default: any
-# @param ip Ip address to allow access to. default: $facts['networking']['ip']
-# @param port Port to act on. default: all
-# @param proto Protocol to use. default: tcp
+# @param direction
+#   Traffic direction
+# @param ensure
+#   Enable of disable rule. default:
+# @param from
+#   Ip address to allow access from.
+# @param ip
+#   Ip address to allow access to. default:
+# @param port
+#   Port to act on.
+# @param proto
+#   Protocol to use.
 #
 define ufw::allow(
   Enum['IN','OUT']                         $direction ='IN',
