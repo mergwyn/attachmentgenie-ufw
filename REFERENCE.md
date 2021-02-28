@@ -15,7 +15,7 @@
 
 * [`ufw::allow`](#ufwallow): Create allow rule
 * [`ufw::deny`](#ufwdeny): Define deny rule
-* [`ufw::limit`](#ufwlimit): Define limit
+* [`ufw::limit`](#ufwlimit): Set rate limit for port
 * [`ufw::reject`](#ufwreject): Define reject rule
 
 ## Classes
@@ -141,7 +141,7 @@ Create allow rule
 
 #### Examples
 
-##### when declaring the ufw class
+##### Allow port 22 (sh)
 
 ```puppet
 ufw::allow { 'allow-ssh-from-all':
@@ -214,7 +214,7 @@ Define deny rule
 
 #### Examples
 
-##### when declaring the ufw class
+##### Deny port 22 (ssh)
 
 ```puppet
 ufw::deny { 'deny-ssh-from-all':
@@ -274,16 +274,14 @@ Default value: `'tcp'`
 
 ### <a name="ufwlimit"></a>`ufw::limit`
 
-TODO udpate for limit
+Set rate limit for port
 
 #### Examples
 
-##### when declaring the ufw class
+##### Rate limit port 22 (ssh)
 
 ```puppet
-ufw::deny { 'deny-ssh-from-all':
-  port => '22',
-}
+ufw::limit { '22': }
 ```
 
 #### Parameters
@@ -302,14 +300,14 @@ Default value: `'tcp'`
 
 ### <a name="ufwreject"></a>`ufw::reject`
 
-TODO update exmaple
+Define reject rule
 
 #### Examples
 
-##### when declaring the ufw class
+##### Reject port 22 (ssh) from all
 
 ```puppet
-ufw::deny { 'deny-ssh-from-all':
+ufw::reject { 'reject-ssh-from-all':
   port => '22',
 }
 ```
